@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Noorin Sakhi - Instagram Zeitgeist</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* RESET */
+
+        @media (max-width: 1000px) {
+            .container {
+                flex-direction: column;
+                gap: 50px;
+            }
+
+            .info {
+                text-align: center;
+                max-width: 500px;
+            }
+        }
+
+        .image {
+            width: 100%;
+            height: 140px;
+            /* controls height */
+            object-fit: cover;
+            /* crops nicely instead of stretching */
+            border-radius: 16px;
+            margin: 12px 0 18px;
+            opacity: 0.9;
+            transition: 0.3s;
+        }
+
+        .image:hover {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* NEW CONTENT STYLING */
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .section p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #ccc;
+        }
+
+        /* Highlight text */
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Divider line */
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #555, transparent);
+            margin: 18px 0;
+        }
+
+        /* Quote block */
+        .quote {
+            font-style: italic;
+            font-size: 13px;
+            color: #aaa;
+            border-left: 2px solid #888;
+            padding-left: 12px;
+            margin: 12px 0;
+        }
+
+        /* Insight cards */
+        .card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 14px;
+            border-radius: 14px;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #ddd;
+        }
+
+        /* Title glow */
+        .page h2 {
+            font-size: 22px;
+            margin-bottom: 14px;
+            background: linear-gradient(90deg, #fff, #bbb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                radial-gradient(circle at 20% 20%, #ff00cc33, transparent 40%),
+                radial-gradient(circle at 80% 30%, #3333ff33, transparent 40%),
+                radial-gradient(circle at 50% 80%, #00ffcc22, transparent 40%),
+                #000;
+
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 120px;
+
+            width: 100%;
+            max-width: 1400px;
+            padding: 40px;
+        }
+
+        /* PHONE */
+        .phone {
+            width: 360px;
+            height: 740px;
+            border-radius: 45px;
+            padding: 12px;
+            background: #000;
+
+            box-shadow:
+                0 40px 100px rgba(0, 0, 0, 0.8),
+                0 0 40px rgba(255, 0, 150, 0.2),
+                0 0 80px rgba(0, 100, 255, 0.15);
+        }
+
+        /* SCREEN */
+        .screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 35px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(180deg, #1c1c1e, #000);
+        }
+
+        .screen::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.08),
+                    transparent);
+            transform: rotate(25deg);
+            pointer-events: none;
+        }
+
+        /* STATUS BAR */
+        .status {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            color: #aaa;
+            font-size: 12px;
+        }
+
+        /* HOME */
+        .home {
+            height: 100%;
+            padding: 80px 30px 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* APP */
+        .app {
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .app:hover {
+            transform: scale(1.12);
+        }
+
+        .app:active {
+            transform: scale(0.95);
+        }
+
+        .info {
+            max-width: 380px;
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            backdrop-filter: blur(25px);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            padding: 40px;
+            border-radius: 28px;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.7),
+                0 0 60px rgba(255, 0, 150, 0.15),
+                0 0 120px rgba(0, 100, 255, 0.1);
+        }
+
+        .info h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 12px;
+
+            background: linear-gradient(90deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .info h3 {
+            font-weight: 400;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #ddd;
+        }
+
+        /* ICON */
+        .icon {
+            width: 72px;
+            height: 72px;
+            font-size: 28px;
+            border-radius: 20px;
+            margin: auto;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            box-shadow:
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .app:hover .icon {
+            transform: translateY(-6px) scale(1.08);
+            box-shadow:
+                0 15px 30px rgba(0, 0, 0, 0.6),
+                0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .phone {
+            width: min(92vw, 420px);
+            height: min(92vh, 860px);
+
+            border-radius: 45px;
+            padding: 14px;
+            background: #000;
+            flex-shrink: 0;
+
+            box-shadow:
+                0 60px 140px rgba(0, 0, 0, 0.9),
+                0 0 60px rgba(255, 0, 150, 0.25),
+                0 0 120px rgba(0, 100, 255, 0.2);
+
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* COLORS */
+        .i1 {
+            background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf, #4f5bd5);
+        }
+
+        .i2 {
+            background: linear-gradient(45deg, #3a86ff, #4361ee);
+        }
+
+        .i3 {
+            background: linear-gradient(45deg, #8338ec, #c77dff);
+        }
+
+        .i4 {
+            background: linear-gradient(45deg, #ff006e, #ff4d6d);
+        }
+
+        .i5 {
+            background: linear-gradient(45deg, #06d6a0, #1b9aaa);
+        }
+
+        .i6 {
+            background: linear-gradient(45deg, #ffd166, #ffbe0b);
+        }
+
+        .i7 {
+            background: linear-gradient(45deg, #ef476f, #ff5d8f);
+        }
+
+        .i8 {
+            background: linear-gradient(45deg, #118ab2, #06aed5);
+        }
+
+        /* PAGE */
+        .page {
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 60px 20px 20px;
+            transform: translateY(100%);
+            transition: 0.4s ease;
+            overflow-y: auto;
+            color: white;
+            opacity: 0;
+            transform: translateY(100%) scale(0.96);
+        }
+
+        .page.active {
+            transform: translateY(0);
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* NAV */
+        .topbar {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 14px;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        /* TEXT */
+        h2 {
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- SIDE INFO -->
+        <div class="info">
+            <h1>Instagram Zeitgeist</h1>
+            <h3>By Noorin Sakhi</h3>
+
+            <p>
+                Here I have explored how Instagram over time, has evolved and how it shapes identity,
+                culture, and mental health among Gen Z. I coded this interface using HTML and CSS to mimic a mobile
+                experience to sort of relate to the digital world.
+            </p>
+        </div>
+
+        <!-- PHONE -->
+
+        <div class="phone">
+            <div class="screen">
+
+                <div class="status">9:41</div>
+
+                <!-- HOME -->
+                <div class="home">
+
+                    <div class="app" onclick="openPage('p1')">
+                        <div class="icon i1">📸</div>
+                        <div>Intro</div>
+                    </div>
+
+                    <div class="app" onclick="openPage('p2')">
+                        <div class="icon i2">📊</div>
+                        <div>Evolution</div>
+                    </div>
+
+                    <div class="app" onclick="openPage('p3')">
+                        <div class="icon i3">🧠</div>
+                        <div>Zeitgeist</div>
+                    </div>
+
+                    <div class="app" onclick="openPage('p4')">
+                        <div class="icon i4">💭</div>
+                        <div>Beliefs</div>
+                    </div>
+
+                    <div class="app" onclick="openPage('p5')">
+                        <div class="icon i5">❤️</div>
+                        <div>Mental</div>
+                    </div>
+
+                    <div class="app" onclick="openPage('p6')">
+                        <div class="icon i6">⏳</div>
+                        <div>2020s</div>
+                    </div>
+
+                    <div class="app" onclick="openPage('p7')">
+                        <div class="icon i7">📚</div>
+                        <div>Theory</div>
+                    </div>
+
+                    <div class="app" onclick="openPage('p8')">
+                        <div class="icon i8">🔗</div>
+                        <div>Sources</div>
+                    </div>
+
+                </div>
+
+                <!-- PAGES -->
+                <!-- PAGES -->
+
+                <div id="p1" class="page">
+                    <div class="topbar" onclick="closePage()">← Back</div>
+                    <h2>Instagram & Gen Z</h2>
+
+                    <img class="image"
+                        src="https://images.ctfassets.net/az3stxsro5h5/1BtgNiJUE8PGO9FAWOblSu/fccefc665535c1132c1e52f1c0b779da/Jun23-How_to_Create_a_Cohesive_Instagram_Aesthetic-Horizontal.png">
+
+                    <div class="section">
+                        <p>
+                            I chose Instagram to represent the zeitgeist of my generation
+                            , a social media platform launched in 2010.
+                            Originally designed for sharing everyday photos, Instagram has evolved into a platform
+                            centered around
+                            <span class="highlight">self-presentation, identity construction, and social
+                                validation</span>.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            As one of the most widely used platforms among Gen Z, Instagram reflects how communication,
+                            identity, and social
+                            interaction have shifted into digital spaces.
+                            As of the 2020s, Instagram has over <span class="highlight">2 billion active users</span>,
+                            showcasing its
+                            global influence on culture and behaviour.
+                        </p>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="section">
+                        <p>
+                            Rather than simply capturing life, Instagram now shapes how life is experienced and the
+                            standards of life. Users
+                            carefully select what
+                            they post, creating curated versions of themselves for others to see. This shows how
+                            identity is no longer just
+                            personal, but something that is continuously constructed and shared online.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        Instagram represents more than just technology - it reflects how an entire generation
+                        experiences social life,
+                        identity, and validation through a digital lens.
+                    </div>
+                </div>
+
+                <div id="p2" class="page">
+                    <div class="topbar" onclick="closePage()">← Back</div>
+                    <h2>Representation of the Zeitgeist</h2>
+
+                    <img class="image"
+                        src="https://images.squarespace-cdn.com/content/v1/5eb48d3fef49df153d320521/1594207336539-83LCRM4J198M1DLHKH3T/FirstImage.png">
+
+                    <div class="section">
+                        <p>
+                            Instagram represents a generation defined by
+                            <span class="highlight">constant visibility, connection, and performance</span>.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            Gen Z spends a significant amount of time on social media, using platforms like Instagram
+                            daily for
+                            communication, entertainment, and self-expression. Unlike earlier generations, identity is
+                            no longer private -
+                            it is shared, viewed, and judged all in real time.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            Features such as <span class="highlight">likes, followers, stories, and the explore
+                                page</span> encourage users
+                            to seek attention and recognition. The rise of influencer culture also shows how individuals
+                            can build entire
+                            careers based on online identities.
+                        </p>
+                    </div>
+
+                    <div class="quote">
+                        “Life is not just lived, it is displayed.”
+                    </div>
+
+                    <div class="card">
+                        This reflects a cultural shift where being seen, recognized, and validated by others has become
+                        a central part of
+                        social existence for Gen Z.
+                    </div>
+                </div>
+
+                <div id="p3" class="page">
+                    <div class="topbar" onclick="closePage()">← Back</div>
+                    <h2>Generational Beliefs</h2>
+
+                    <img class="image" src="https://miro.medium.com/1*1nYXAU45uqXDgotUGHKpWQ.jpeg">
+
+                    <div class="section">
+                        <p>
+                            One key belief of this generation is that
+                            <span class="highlight">identity is constructed rather than fixed</span>.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            Instagram allows users to carefully choose what they share, creating a version of themselves
+                            that may not fully
+                            reflect reality. This shows how identity can be shaped and edited depending on how
+                            individuals want to be
+                            perceived.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            Another belief is that <span class="highlight">social validation determines value</span>,
+                            where likes, comments,
+                            and followers act as indicators of success and popularity.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        Overall, this reflects a broader shift where identity is socially constructed and continuously
+                        shaped through
+                        interaction, statistics and feedback from others.
+                    </div>
+
+                </div>
+
+                <div id="p4" class="page">
+                    <div class="topbar" onclick="closePage()">← Back</div>
+                    <h2>Critical Insight</h2>
+
+                    <img class="image" src="https://kamakhyaa.com/cdn/shop/articles/blog_banners_8.png?v=16885558220">
+
+                    <div class="section">
+                        <p>
+                            Although Instagram promotes creativity and connection, it also encourages
+                            <span class="highlight">comparison and unrealistic standards</span>.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            Users are constantly exposed to carefully edited, filtered, and idealised content, which can
+                            distort their
+                            perception of reality and create pressure to meet unrealistic expectations.
+                        </p>
+                    </div>
+
+                    <div class="quote">
+                        “What we see online is often a highlight, not the full picture.”
+                    </div>
+
+                    <div class="card">
+                        This creates a contradiction within the generation, where individuals value being authentic but
+                        still feel pressure to
+                        present a perfect and curated version of themselves.
+                    </div>
+                </div>
+
+
+                <div id="p5" class="page">
+                    <div class="topbar" onclick="closePage()">← Back</div>
+                    <h2>Mental Health Impact</h2>
+
+                    <img class="image"
+                        src="https://red.msudenver.edu/wp-content/uploads/2022/03/Social-media-mental-heatlh_RED.jpg">
+
+                    <div class="section">
+                        <p>
+                            Instagram has a significant impact on mental health, particularly through
+                            <span class="highlight">comparison, pressure, and self-doubt</span>.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            Research has shown that increased social media use is associated with higher levels of
+                            anxiety, lower
+                            self-esteem, and increased social comparison among teens.
+                        </p>
+                    </div>
+
+                    <div class="quote">
+                        “Everyone ELSE seems happier, more successful, and more confident.”
+                    </div>
+
+                    <div class="card">
+                        While Instagram connects people globally, it can also highlight feelings of insecurity and
+                        pressure to meet
+                        unrealistic standards of success and appearance.
+                    </div>
+                </div>
+
+
+                <div id="p6" class="page">
+                    <div class="topbar" onclick="closePage()">← Back</div>
+                    <h2>The 2020s Shift</h2>
+
+                    <img class="image"
+                        src="https://trulaw.com/wp-content/uploads/2023/11/Instagram-Mental-Health_-Whats-the-Impact-on-Young-Users-768x384.png">
+
+                    <div class="section">
+                        <p>
+                            In the 2020s, there has been a noticeable shift toward
+                            <span class="highlight">authenticity and mental health awareness</span>.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            Many Gen Z users now recognise the negative effects of social media and actively try to
+                            limit usage or engage or create
+                            more genuine and unfiltered content.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            For example, trends such as “photo dumps,” less edited photos, and open discussions about
+                            mental health reflect
+                            a movement toward being more real online.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            However, even authenticity can become performative, as users still seek validation through
+                            likes and engagement.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        This shows that while the way people present themselves has changed, the underlying need for
+                        visibility, approval,
+                        and social validation has remained consistent over time.
+                    </div>
+                </div>
+
+                <div id="p7" class="page">
+                    <div class="topbar" onclick="closePage()">← Back</div>
+                    <h2>Connection. This is my own external research that I completed.</h2>
+
+                    <img class="image" src="https://screenshots.scribd.com/Scribd/252_100_85/141/446203618/6.jpeg">
+
+                    <div class="section">
+                        <p>
+                            Instagram can be connected to the sociological concept of the
+                            <span class="highlight">Looking Glass Self</span> by Charles Horton Cooley.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            This theory suggests that people develop their identity based on how they believe others
+                            perceive or see them.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            On Instagram, likes, comments, and followers give constant feedback, shaping how users
+                            see themselves and how
+                            they choose to present their identity online.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        This demonstrates how Instagram reinforces the Looking Glass Self, as people continuously
+                        adjust their
+                        behaviour based on perceived judgments, creating a loop where identity is shaped through social
+                        interaction.
+                    </div>
+                </div>
+
+                <div id="p8" class="page">
+                    <div class="topbar" onclick="closePage()">← Back</div>
+                    <h2>References</h2>
+                    <div class="section">
+                        <p>
+                            Kumar, P. M., & Kishore, P. R. (2024). Impacts of Social Media on Gen Z.(ResearchGate PDF)
+                            (this is a pdf
+                            source I downloaded)
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <p>
+                            Schaefer, A. (2026). Gen Z social media trends & usage. Sprout Social. Retrieved from
+                            https://sproutsocial.com/insights/gen-z-social-media/
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        These sources support how social media influences identity, behaviour, and mental health in
+                        Generation Z.
+                    </div>
+                </div>
+
+
+                <script>
+
+                    function openPage(id) {
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.getElementById(id).classList.add('active');
+                    }
+
+                    function closePage() {
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    }
+
+                </script>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+</html>
